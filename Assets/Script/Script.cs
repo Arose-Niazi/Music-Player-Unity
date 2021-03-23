@@ -44,6 +44,7 @@ public class Script : MonoBehaviour
         _filesOpener = new FilesOpener(this);
         _playLists = Playlist.LoadPlaylists();
         CreatePlayListsButtons();
+        _currentPlayList = new Playlist("");
     }
 
     private void Update()
@@ -129,6 +130,8 @@ public class Script : MonoBehaviour
 
     public void SavePlaylist()
     {
+        if(currentPlayListName.text.Length < 1)
+            return;
         _currentPlayList.SetName(currentPlayListName.text);
         _currentPlayList.Save();
         AddPlayListButton(_currentPlayList);
@@ -145,7 +148,7 @@ public class Script : MonoBehaviour
 
     public void ClearAllSongs()
     {
-        _currentPlayList = null;
+        _currentPlayList = new Playlist("");
         foreach (GameObject song in _songsList)
         {
             Destroy(song);
