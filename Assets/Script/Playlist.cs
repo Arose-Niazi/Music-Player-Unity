@@ -1,8 +1,6 @@
-﻿
-using System;
+﻿using System;
 using System.Collections;
 using System.IO;
-using UnityEngine;
 
 public class Playlist
 {
@@ -32,6 +30,11 @@ public class Playlist
     {
         _songs.Remove(song);
     }
+    
+    public void RemoveSongAt(int song)
+    {
+        _songs.RemoveAt(song);
+    }
 
     public void SavePlayList()
     {
@@ -48,6 +51,11 @@ public class Playlist
         return _name;
     }
 
+    public int Find(Song song)
+    {
+        return _songs.IndexOf(song);
+    }
+
     public void Save()
     {
         string path = "playlists/"+_name+".playlist";
@@ -57,6 +65,17 @@ public class Playlist
             writer.WriteLine(song.GetSavePath());
         }
         writer.Close();
+    }
+
+    public Song GetSong(int song)
+    {
+        if (song > _songs.Count) return null;
+        return (Song) _songs[song];
+    }
+
+    public int TotalSongs()
+    {
+        return _songs.Count;
     }
 
     public void Load(Script mainScript)
@@ -87,7 +106,6 @@ public class Playlist
                 if (file.EndsWith(".playlist"))
                 {
                     string f = file.Remove(0, file.LastIndexOf("\\", StringComparison.Ordinal) + 1);
-                    Debug.Log(f);
                     f = f.Remove(f.Length - 9, 9);
                     Playlist playlist = new Playlist(f);
                     playlists.Add(playlist);
