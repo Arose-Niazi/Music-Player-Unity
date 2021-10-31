@@ -99,7 +99,8 @@ public class Script : MonoBehaviour
         btn.GetComponentInChildren<Text>().text = song.GetName();
         btn.GetComponent<Button>().onClick.AddListener(delegate {StartCoroutine(PlaySong(song));});
         _songsList.Add(btn);
-        _currentPlayList.AddSong(song);
+        if (!_currentPlayList.AddSong(song))
+            Debug.LogWarning("Already in playlsit");
     }
 
 
@@ -115,7 +116,11 @@ public class Script : MonoBehaviour
     {
         var btn = Instantiate(songButton, allPlayLists.transform, false);
         btn.GetComponentInChildren<Text>().text = playlist.GetName();
-        btn.GetComponent<Button>().onClick.AddListener(delegate {LoadPlayList(playlist);});
+        btn.GetComponent<Button>().onClick.AddListener(
+            delegate
+            {
+                LoadPlayList(playlist);
+            });
         _playListsButton.Add(btn);
     }
 

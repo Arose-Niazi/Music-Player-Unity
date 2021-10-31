@@ -80,20 +80,14 @@ public class Playlist
 
     public void Load(Script mainScript)
     {
-        string path = "playlists/"+_name+".playlist";
-        try
+        string path = "playlists/" + _name + ".playlist";
+        StreamReader reader = new StreamReader(path);
+        while (!reader.EndOfStream)
         {
-            StreamReader reader = new StreamReader(path);
-            while (!reader.EndOfStream)
-            {
-                mainScript.AddSong(reader.ReadLine()); 
-            }
-            reader.Close();
+            mainScript.AddSong(reader.ReadLine());
         }
-        catch (Exception e)
-        {
-            // ignored
-        }
+
+        reader.Close();
     }
 
     public static ArrayList LoadPlaylists()
